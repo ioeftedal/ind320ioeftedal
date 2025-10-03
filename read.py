@@ -23,4 +23,3 @@ def read_transpose_csv_file(filepath):
     data_transposed['combined'] = data_transposed.values.tolist()
 
     return data_transposed['combined']
-

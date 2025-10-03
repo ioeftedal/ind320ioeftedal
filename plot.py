@@ -7,15 +7,16 @@ def get_data():
 
 data_df = get_data()
 
-print(data_df)
-
 all_users = ["temperature_2m (°C)", "precipitation (mm)", "wind_speed_10m (m/s)", "wind_gusts_10m (m/s)", "wind_direction_10m (°)" ]
 
 with st.container(border=True):
-    users = st.multiselect("Users", all_users, default=all_users)
+    # users = st.multiselect("Users", all_users, default=all_users)
 
-data = data_df
+    option = st.selectbox(
+        "Option",
+        (all_users),
+    )
 
-tab1, tab2 = st.tabs(["Chart", "Dataframe"])
-tab1.line_chart(data, height=600)
-tab2.dataframe(data, height=250, use_container_width=True)
+st.write("You selected:", option)
+
+st.line_chart(data_df[f'{option}'], height=600)
