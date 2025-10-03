@@ -4,3 +4,4 @@ watchdog
 faker
 altair>=4.0.0
 vega_datasets
+matplotlib
