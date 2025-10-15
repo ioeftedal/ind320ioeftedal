@@ -17,7 +17,7 @@ def filter_by_month(df: pd.DataFrame, month: int) -> pd.DataFrame:
         return df
     return df[df['time'].dt.month == month]
 
-def get_month_options(None) -> list:
+def get_month_options() -> list:
     return [
         "All Months",
         "January",

@@ -1,8 +1,6 @@
 import streamlit as st
 from read import read_csv_file, filter_by_month, get_month_options, get_month_number
 
-# Get and store the data from the csv file
-@st.cache_data
 def get_data():
     return read_csv_file("data/open-meteo-subset.csv")
 
