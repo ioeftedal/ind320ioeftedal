@@ -26,8 +26,7 @@
           uv
           python312
           basedpyright
-          ruff
-          heroku
+          docker
         ];
 
         # LD_LIBRARY_PATH = lib.makeLibraryPath [pkgs.stdenv.cc.cc];
