@@ -27,6 +27,7 @@
           python312
           basedpyright
           docker
+          jdk21
         ];
 
         # LD_LIBRARY_PATH = lib.makeLibraryPath [pkgs.stdenv.cc.cc];
