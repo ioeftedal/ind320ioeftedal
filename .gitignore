@@ -6,6 +6,12 @@ __pycache__/
 # Mac
 *.DS_Store
 
+# Streamlit
+.streamlit
+
+# My secret python file
+secret.py
+
 # C extensions
 *.so
 
