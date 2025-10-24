@@ -30,6 +30,14 @@
           jdk21
         ];
 
+        buildinputs = [
+          (pkgs.python3.withPackages (ps: with ps; [
+            jupyter
+            ipython
+            ipykernel
+          ]))
+        ];
+
         # LD_LIBRARY_PATH = lib.makeLibraryPath [pkgs.stdenv.cc.cc];
         LD_LIBRARY_PATH = "${pkgs.stdenv.cc.cc.lib}/lib";
       };
