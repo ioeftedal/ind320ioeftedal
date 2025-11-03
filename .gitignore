@@ -3,6 +3,12 @@ __pycache__/
 *.py[codz]
 *$py.class
 
+# Direnv for nix
+.direnv
+
+# Idea? i dont know what this is
+.idea
+
 # Mac
 *.DS_Store
 
