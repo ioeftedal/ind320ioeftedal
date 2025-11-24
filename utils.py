@@ -84,8 +84,13 @@ def detect_temperature_outliers(df, temp_col='temperature_2m', cutoff=100, std_m
     # Robust statistics
     med_satv = np.median(satv)
     mad_satv = np.median(np.abs(satv - med_satv))
-    upper_band = trend + std_mult * mad_satv
-    lower_band = trend - std_mult * mad_satv
+
+    # Correct robust sigma (normal-consistent)
+    robust_sigma = 1.4826 * mad_satv
+
+    # Correct SPC-like control limits
+    upper_band = trend + std_mult * robust_sigma
+    lower_band = trend - std_mult * robust_sigma
 
     # Detect outliers
     mask_temp_out = (temp > upper_band) | (temp < lower_band)
