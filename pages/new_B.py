@@ -32,7 +32,7 @@ if "df" in st.session_state:
 
         if st.button("Run Outlier/SPC Analysis"):
             fig, ax, summaries = detect_temperature_outliers(df, cutoff=cutoff, std_mult=std_mult)
-            st.pyplot(fig)
+            st.plotly_chart(fig, use_container_width=True)
             st.markdown("### Temperature Outliers")
             st.dataframe(summaries["temperature_outliers"].head())
 
@@ -42,6 +42,6 @@ if "df" in st.session_state:
 
         if st.button("Run LOF Analysis"):
             fig, ax, summaries = detect_precipitation_anomalies(df, lof_frac=lof_frac)
-            st.pyplot(fig)
+            st.plotly_chart(fig, use_container_width=True)
             st.markdown("### Precipitation Anomalies")
             st.dataframe(summaries["precip_anomalies"].head())

@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
-import matplotlib.pyplot as plt
+import plotly.express as px
+import plotly.graph_objects as go
 from mongodb import get_data
 
 st.title("Electricity Consumption Analysis")
@@ -28,23 +29,24 @@ with col1:
     df_area = df[df["pricearea"] == selected_pricearea]
 
     # Pie chart: consumption distribution by consumption group
-    pie_data = df_area.groupby("consumptiongroup")["quantitykwh"].sum()
-
-    fig1, ax1 = plt.subplots()
-    ax1.pie(pie_data, labels=pie_data.index, autopct="%1.1f%%", startangle=90)
-    ax1.axis("equal")
-    st.pyplot(fig1)
+    pie_data = df_area.groupby("consumptiongroup")["quantitykwh"].sum().reset_index()
+    
+    fig1 = px.pie(
+        pie_data, 
+        names="consumptiongroup", 
+        values="quantitykwh", 
+        title=f"Consumption Distribution in {selected_pricearea}",
+        hole=0.3
+    )
+    st.plotly_chart(fig1, use_container_width=True)
 
 with col2:
     st.subheader("Consumption Trend by Production Group")
 
     # Pills for selecting production groups
     groups = sorted(df["consumptiongroup"].unique())
-    selected_groups = st.pills(
-        "Select Production Groups",
-        groups,
-        default=groups,
-        selection_mode="multi"
+    selected_groups = st.multiselect(
+        "Select Production Groups", groups, default=groups
     )
 
     # Month selection (dropdown)
@@ -65,16 +67,26 @@ with col2:
         .reset_index()
     )
 
-    # Making the line plot for the the right side of the page
-    fig2, ax2 = plt.subplots()
+    # Line chart
+    fig2 = go.Figure()
     for group in selected_groups:
         group_data = df_line[df_line["consumptiongroup"] == group]
-        ax2.plot(group_data["hour"], group_data["quantitykwh"], label=group)
+        fig2.add_trace(
+            go.Scatter(
+                x=group_data["hour"],
+                y=group_data["quantitykwh"],
+                mode="lines+markers",
+                name=group
+            )
+        )
 
-    ax2.set_xlabel("Hour of Day")
-    ax2.set_ylabel("Total Consumption (kWh)")
-    ax2.set_title(f"Hourly Consumption in {selected_pricearea} ({selected_month})")
-    st.pyplot(fig2)
+    fig2.update_layout(
+        title=f"Hourly Consumption in {selected_pricearea} ({selected_month})",
+        xaxis_title="Hour of Day",
+        yaxis_title="Total Consumption (kWh)",
+        xaxis=dict(dtick=1)
+    )
+    st.plotly_chart(fig2, use_container_width=True)
 
 with st.expander("Data Source Information"):
     st.markdown("""
@@ -86,4 +98,3 @@ with st.expander("Data Source Information"):
     The dataset represents hourly electricity consumption in 2021,  
     grouped by price area and consumption group.
     """)
-

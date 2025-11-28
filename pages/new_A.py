@@ -47,7 +47,7 @@ if "df" in st.session_state:
                 seasonal=seasonal,
                 trend=trend,
             )
-            st.pyplot(fig)
+            st.plotly_chart(fig, use_container_width=True)
             st.markdown("### Component Summary")
             st.dataframe(result.trend.describe().to_frame("Trend"))
             st.dataframe(result.seasonal.describe().to_frame("Seasonal"))
@@ -70,5 +70,5 @@ if "df" in st.session_state:
                 window_length=window_length,
                 overlap=overlap
             )
-            st.pyplot(fig)
+            st.plotly_chart(fig, use_container_width=True)
             st.markdown("Spectrogram generated for selected location.")
